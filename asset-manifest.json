@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/---training---Working-With-Forms/static/css/main.0f55be68.css",
+    "main.js": "/---training---Working-With-Forms/static/js/main.63cb6c17.js",
+    "index.html": "/---training---Working-With-Forms/index.html",
+    "main.0f55be68.css.map": "/---training---Working-With-Forms/static/css/main.0f55be68.css.map",
+    "main.63cb6c17.js.map": "/---training---Working-With-Forms/static/js/main.63cb6c17.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0f55be68.css",
+    "static/js/main.63cb6c17.js"
+  ]
+}

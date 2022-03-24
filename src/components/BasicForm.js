@@ -1,6 +1,10 @@
 import useInput from '../hooks/use-input';
 
 const BasicForm = (props) => {
+	const isNotEmpty = (value) => value.trim() !== '';
+	const isEmail = (value) =>
+		value.trim() !== '' && value.includes('@') && value.includes('.');
+
 	const {
 		value: enteredFirstName,
 		isValid: enteredFirstNameIsValid,
@@ -8,7 +12,7 @@ const BasicForm = (props) => {
 		valueChangeHandler: firstNameChangeHandler,
 		inputBlurHandler: firstNameBlurHandler,
 		reset: resetFirstNameInput,
-	} = useInput((value) => value.trim() !== '');
+	} = useInput(isNotEmpty);
 
 	const {
 		value: enteredLastName,
@@ -17,7 +21,7 @@ const BasicForm = (props) => {
 		valueChangeHandler: lastNameChangeHandler,
 		inputBlurHandler: lastNameBlurHandler,
 		reset: resetLastNameInput,
-	} = useInput((value) => value.trim() !== '');
+	} = useInput(isNotEmpty);
 
 	const {
 		value: enteredEmail,
@@ -26,9 +30,7 @@ const BasicForm = (props) => {
 		valueChangeHandler: emailChangeHandler,
 		inputBlurHandler: emailBlurHandler,
 		reset: resetEmailInput,
-	} = useInput(
-		(value) => value.trim() !== '' && value.includes('@') && value.includes('.')
-	);
+	} = useInput(isEmail);
 
 	let formIsValid = false;
 
@@ -43,11 +45,7 @@ const BasicForm = (props) => {
 	const formSubmissionHandler = (event) => {
 		event.preventDefault();
 
-		if (
-			!enteredFirstNameIsValid ||
-			!enteredLastNameIsValid ||
-			!enteredEmailIsValid
-		) {
+		if (!formIsValid) {
 			return;
 		}
 
@@ -81,18 +79,26 @@ const BasicForm = (props) => {
 					<input
 						type="text"
 						id="name"
+						value={enteredFirstName}
 						onChange={firstNameChangeHandler}
 						onBlur={firstNameBlurHandler}
 					/>
+					{firstNameInputHasError && (
+						<p className="error-text">First name must not be empty.</p>
+					)}
 				</div>
 				<div className={lastNameInputClasses}>
 					<label htmlFor="name">Last Name</label>
 					<input
 						type="text"
 						id="name"
+						value={enteredLastName}
 						onChange={lastNameChangeHandler}
 						onBlur={lastNameBlurHandler}
 					/>
+					{lastNameInputHasError && (
+						<p className="error-text">Last name must not be empty.</p>
+					)}
 				</div>
 			</div>
 			<div className={emailInputClasses}>
@@ -100,9 +106,15 @@ const BasicForm = (props) => {
 				<input
 					type="text"
 					id="name"
+					value={enteredEmail}
 					onChange={emailChangeHandler}
 					onBlur={emailBlurHandler}
 				/>
+				{emailInputHasError && (
+					<p className="error-text">
+						Email must not be empty and must be valid to Google Mail address.
+					</p>
+				)}
 			</div>
 			<div className="form-actions">
 				<button disabled={!formIsValid}>Submit</button>
